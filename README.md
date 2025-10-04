@@ -119,7 +119,7 @@ breathing-river/
 
 1. **Clone the repository**
 \`\`\`bash
-git clone [https://github.com/Abdelrahman-emad-negm/Breathing_Rivers](https://github.com/Abdelrahman-emad-negm/Breathing_Rivers)
+git clone https://github.com/yourusername/breathing-river.git
 cd breathing-river
 \`\`\`
 

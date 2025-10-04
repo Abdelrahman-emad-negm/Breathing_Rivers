@@ -3,7 +3,9 @@
 import { useState } from "react"
 import Link from "next/link"
 import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { Sparkles, CheckCircle2, ArrowLeft } from "lucide-react"
 
 interface AdviceCategory {
   id: string
@@ -20,7 +22,7 @@ const adviceCategories: AdviceCategory[] = [
   {
     id: "environment",
     title: "Help Environment",
-    icon: "🌳",
+    
     description: "Plant trees and restore nature",
     tips: [
       "Plant trees along field boundaries to prevent erosion",
@@ -41,7 +43,6 @@ const adviceCategories: AdviceCategory[] = [
   {
     id: "irrigation",
     title: "Smart Irrigation",
-    icon: "💧",
     description: "Efficient water use in crop irrigation",
     tips: [
       "Use drip irrigation systems to deliver water directly to plant roots",
@@ -56,7 +57,6 @@ const adviceCategories: AdviceCategory[] = [
   {
     id: "soil",
     title: "Soil Management",
-    icon: "🌱",
     description: "Healthy soil retains more water",
     tips: [
       "Add organic matter and compost to improve soil water retention",
@@ -76,7 +76,6 @@ const adviceCategories: AdviceCategory[] = [
   {
     id: "crops",
     title: "Crop Selection",
-    icon: "🌾",
     description: "Choose water-efficient crops",
     tips: [
       "Select drought-resistant crop varieties suited to your climate",
@@ -96,7 +95,6 @@ const adviceCategories: AdviceCategory[] = [
   {
     id: "rainwater",
     title: "Rainwater Harvesting",
-    icon: "🌧️",
     description: "Capture and store natural rainfall",
     tips: [
       "Build ponds or reservoirs to collect rainwater",
@@ -116,7 +114,6 @@ const adviceCategories: AdviceCategory[] = [
   {
     id: "runoff",
     title: "Prevent Runoff",
-    icon: "🛡️",
     description: "Protect rivers from agricultural pollution",
     tips: [
       "Create buffer zones with vegetation along waterways",
@@ -136,7 +133,6 @@ const adviceCategories: AdviceCategory[] = [
   {
     id: "technology",
     title: "Modern Technology",
-    icon: "📱",
     description: "Use technology for water management",
     tips: [
       "Install weather stations to track rainfall and evaporation",
@@ -189,169 +185,215 @@ export default function FarmersPage() {
         </Link>
       </div>
 
-      <section className="pt-32 pb-16 px-4 bg-gradient-to-br from-green-100 to-blue-100 dark:from-green-900/20 dark:to-blue-900/20">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h1 className="font-oswald text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 text-balance uppercase">
+      <section className="pt-32 pb-16 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/golden-wheat-crops-growing-in-agricultural-field-u.jpg"
+            alt="Agricultural field"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-green-600/85 via-emerald-600/80 to-background/95" />
+        </div>
+        <div className="container mx-auto max-w-4xl text-center relative z-10">
+          <div className="text-6xl mb-6"></div>
+          <h1 className="font-oswald text-5xl md:text-6xl font-bold text-white mb-6 text-balance uppercase drop-shadow-lg">
             For Farmers
           </h1>
-          <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-4 text-pretty">
+          <p className="text-xl text-white/95 leading-relaxed mb-4 text-pretty drop-shadow-md">
             As stewards of the land, farmers play a crucial role in protecting our rivers and water resources.
           </p>
-          <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed text-pretty">
+          <p className="text-lg text-white/90 leading-relaxed text-pretty drop-shadow-md">
             Discover practical techniques to conserve water, restore nature, and build a sustainable future for your
             farm and community.
           </p>
         </div>
       </section>
 
-      <section className="py-16 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="font-oswald text-3xl md:text-4xl font-bold text-foreground mb-4 uppercase">
-              Water Conservation for Farmers
-            </h2>
-            <p className="text-lg text-muted-foreground text-pretty">
-              Practical advice and proven techniques to conserve water and protect rivers
-            </p>
-          </div>
+      {!selectedCategory && (
+        <section className="py-16 px-4">
+          <div className="container mx-auto max-w-6xl">
+            <div className="text-center mb-12">
+              <h2 className="font-oswald text-3xl md:text-4xl font-bold text-foreground mb-4 uppercase">
+                Water Conservation for Farmers
+              </h2>
+              <p className="text-lg text-muted-foreground text-pretty">
+                Practical advice and proven techniques to conserve water and protect rivers
+              </p>
+            </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {adviceCategories.slice(1).map((category) => (
-              <Card
-                key={category.id}
-                className="p-6 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl hover:ring-2 hover:ring-primary/50 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20"
-                onClick={() => handleCategoryClick(category)}
-              >
-                <div className="flex flex-col items-center text-center">
-                  <div className="w-full h-40 mb-4 rounded-lg overflow-hidden bg-muted">
-                    <img
-                      src={category.image || "/placeholder.svg"}
-                      alt={category.title}
-                      className="w-full h-full object-cover"
-                    />
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {adviceCategories.slice(1).map((category) => (
+                <Card
+                  key={category.id}
+                  className="p-6 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl hover:ring-2 hover:ring-primary/50 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20"
+                  onClick={() => handleCategoryClick(category)}
+                >
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-full h-40 mb-4 rounded-lg overflow-hidden bg-muted">
+                      <img
+                        src={category.image || "/placeholder.svg"}
+                        alt={category.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="text-4xl mb-3">{category.icon}</div>
+                    <h3 className="font-oswald text-xl font-bold mb-2 text-gray-900 dark:text-white uppercase">
+                      {category.title}
+                    </h3>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">{category.description}</p>
                   </div>
-                  <div className="text-4xl mb-3">{category.icon}</div>
-                  <h3 className="font-oswald text-xl font-bold mb-2 text-gray-900 dark:text-white uppercase">
-                    {category.title}
-                  </h3>
-                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">{category.description}</p>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Selected Category Details */}
-      {selectedAdvice && (
-        <section className="py-16 px-4 bg-gradient-to-br from-green-100 to-blue-100 dark:from-green-900/20 dark:to-blue-900/20">
-          <div className="container mx-auto max-w-4xl">
-            <Card className="p-8 md:p-12 bg-gradient-to-br from-white to-green-50 dark:from-gray-900/50 dark:to-blue-900/20">
-              <button
-                onClick={() => setSelectedCategory(null)}
-                className="mb-6 text-primary hover:text-primary/80 font-semibold flex items-center gap-2"
-              >
-                ← Back to Topics
-              </button>
-
-              <div className="text-center mb-8">
-                <div className="text-6xl mb-4">{selectedAdvice.icon}</div>
-                <h2 className="font-oswald text-4xl font-bold mb-4 text-gray-900 dark:text-white uppercase">
-                  {selectedAdvice.title}
-                </h2>
-                <p className="text-xl text-gray-700 dark:text-gray-300">{selectedAdvice.description}</p>
-              </div>
-
-              {/* Image */}
-              <div className="w-full h-64 mb-8 rounded-xl overflow-hidden">
-                <img
-                  src={selectedAdvice.image || "/placeholder.svg"}
-                  alt={selectedAdvice.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              {/* Tips */}
-              <div className="mb-8">
-                <h3 className="font-oswald text-2xl font-bold mb-6 text-gray-900 dark:text-white uppercase">
-                  Practical Tips
-                </h3>
-                <div className="space-y-4">
-                  {selectedAdvice.tips.map((tip, index) => (
-                    <div
-                      key={index}
-                      className="flex items-start gap-3 p-4 rounded-lg bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20"
-                    >
-                      <span className="text-primary font-bold text-lg flex-shrink-0">{index + 1}.</span>
-                      <p className="text-gray-900 dark:text-white leading-relaxed">{tip}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Benefits */}
-              <div className="p-6 rounded-xl bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 border border-green-500/20">
-                <h3 className="font-oswald text-2xl font-bold mb-4 text-gray-900 dark:text-white uppercase">
-                  Benefits
-                </h3>
-                <div className="grid md:grid-cols-2 gap-3">
-                  {selectedAdvice.benefits.map((benefit, index) => (
-                    <div key={index} className="flex items-start gap-2">
-                      <span className="text-green-600 dark:text-green-400 font-bold">✓</span>
-                      <p className="text-gray-900 dark:text-white">{benefit}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Card>
+                </Card>
+              ))}
+            </div>
           </div>
         </section>
       )}
 
-      {/* Impact Section */}
-      <section className="py-16 px-4">
-        <div className="container mx-auto max-w-4xl">
-          <Card className="p-8 md:p-12 bg-gradient-to-br from-blue-100 to-green-100 dark:from-blue-900/30 dark:to-green-900/30">
-            <h2 className="font-oswald text-3xl md:text-4xl font-bold text-center mb-6 text-gray-900 dark:text-white uppercase">
-              Why Water Conservation Matters
-            </h2>
-            <div className="space-y-6 text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-              <p>
-                Agriculture accounts for approximately 70% of global freshwater use. By implementing water-efficient
-                practices, farmers can significantly reduce their environmental impact while maintaining or even
-                improving crop yields.
-              </p>
-              <p>
-                Protecting rivers and water sources ensures sustainable farming for future generations. Healthy rivers
-                support biodiversity, provide irrigation water, and maintain the ecological balance essential for
-                agriculture.
-              </p>
-              <p className="text-center font-semibold text-gray-900 dark:text-white text-xl">
-                Every drop saved today secures tomorrow's harvest.
-              </p>
-            </div>
-          </Card>
-        </div>
-      </section>
+      {selectedAdvice && (
+        <div className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-300 overflow-y-auto">
+          <div className="w-full max-w-5xl my-8">
+            <Card className="relative overflow-hidden bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 dark:from-emerald-950 dark:via-green-950 dark:to-teal-950 border-2 border-emerald-200 dark:border-emerald-800 shadow-2xl animate-in zoom-in-95 duration-500">
+              {/* Decorative Elements */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-white/20 to-transparent rounded-full blur-3xl" />
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-white/20 to-transparent rounded-full blur-3xl" />
 
-      {/* Call to Action */}
-      <section className="py-16 px-4 bg-gradient-to-br from-green-100 to-blue-100 dark:from-green-900/20 dark:to-blue-900/20">
-        <div className="container mx-auto max-w-3xl text-center">
-          <h2 className="font-oswald text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-white uppercase">
-            Start Conserving Today
-          </h2>
-          <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
-            Implement these water-saving techniques on your farm and join the movement to protect our rivers and water
-            resources for future generations.
-          </p>
-          <Link
-            href="/"
-            className="inline-block px-8 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors shadow-lg hover:shadow-xl"
-          >
-            Explore More Roles
-          </Link>
+              <div className="relative p-8 md:p-12">
+                {/* Header Section */}
+                <div className="text-center mb-8">
+                  <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-emerald-400 to-green-500 mb-6 shadow-lg animate-in zoom-in duration-700">
+                    <span className="text-5xl">{selectedAdvice.icon}</span>
+                  </div>
+                  <div className="flex items-center justify-center gap-2 mb-4">
+                    <Sparkles className="w-6 h-6 text-emerald-600 dark:text-emerald-400 animate-pulse" />
+                    <h2 className="font-oswald text-4xl md:text-5xl font-bold bg-gradient-to-r from-emerald-700 to-green-600 dark:from-emerald-400 dark:to-green-400 bg-clip-text text-transparent uppercase">
+                      {selectedAdvice.title}
+                    </h2>
+                    <Sparkles className="w-6 h-6 text-emerald-600 dark:text-emerald-400 animate-pulse" />
+                  </div>
+                  <p className="text-xl md:text-2xl text-emerald-700 dark:text-emerald-300 font-semibold">
+                    {selectedAdvice.description}
+                  </p>
+                </div>
+
+                {/* Image */}
+                <div className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/50 dark:border-gray-800/50 mb-8">
+                  <div className="rounded-xl overflow-hidden shadow-md">
+                    <img
+                      src={selectedAdvice.image || "/placeholder.svg"}
+                      alt={selectedAdvice.title}
+                      className="w-full h-80 object-cover"
+                    />
+                  </div>
+                </div>
+
+                {/* Tips Section */}
+                <div className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-lg border border-white/50 dark:border-gray-800/50 mb-6">
+                  <div className="flex items-center gap-2 mb-6">
+                    <CheckCircle2 className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+                    <h3 className="font-oswald text-2xl md:text-3xl font-bold text-gray-900 dark:text-white uppercase">
+                      Practical Tips
+                    </h3>
+                  </div>
+                  <div className="space-y-4">
+                    {selectedAdvice.tips.map((tip, index) => (
+                      <div
+                        key={index}
+                        className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-emerald-100 to-green-100 dark:from-emerald-900/30 dark:to-green-900/30 border border-emerald-200/50 dark:border-emerald-800/50 transition-transform duration-300 hover:scale-[1.02]"
+                      >
+                        <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-green-500 text-white font-bold flex items-center justify-center text-sm shadow-md">
+                          {index + 1}
+                        </span>
+                        <p className="text-gray-900 dark:text-white leading-relaxed pt-1">{tip}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Benefits Section */}
+                <div className="bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 dark:from-emerald-700 dark:via-green-700 dark:to-teal-700 text-white rounded-2xl p-6 md:p-8 shadow-xl mb-6">
+                  <div className="flex items-center justify-center gap-3 mb-6">
+                    <Sparkles className="w-7 h-7" />
+                    <h3 className="font-oswald text-2xl md:text-3xl font-bold uppercase">Key Benefits</h3>
+                    <Sparkles className="w-7 h-7" />
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {selectedAdvice.benefits.map((benefit, index) => (
+                      <div
+                        key={index}
+                        className="flex items-start gap-3 bg-white/20 backdrop-blur-sm rounded-xl p-4 transition-transform duration-300 hover:scale-[1.02]"
+                      >
+                        <span className="text-emerald-300 font-bold text-xl flex-shrink-0">✓</span>
+                        <p className="leading-relaxed">{benefit}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Action Button */}
+                <div className="flex justify-center">
+                  <Button
+                    onClick={() => setSelectedCategory(null)}
+                    size="lg"
+                    className="px-8 py-6 text-lg font-semibold bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white shadow-lg"
+                  >
+                    <ArrowLeft className="w-5 h-5 mr-2" />
+                    Back to Topics
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          </div>
         </div>
-      </section>
+      )}
+
+      {!selectedCategory && (
+        <>
+          {/* Impact Section */}
+          <section className="py-16 px-4">
+            <div className="container mx-auto max-w-4xl">
+              <Card className="p-8 md:p-12 bg-gradient-to-br from-blue-100 to-green-100 dark:from-blue-900/30 dark:to-green-900/30">
+                <h2 className="font-oswald text-3xl md:text-4xl font-bold text-center mb-6 text-gray-900 dark:text-white uppercase">
+                  Why Water Conservation Matters
+                </h2>
+                <div className="space-y-6 text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                  <p>
+                    Agriculture accounts for approximately 70% of global freshwater use. By implementing water-efficient
+                    practices, farmers can significantly reduce their environmental impact while maintaining or even
+                    improving crop yields.
+                  </p>
+                  <p>
+                    Protecting rivers and water sources ensures sustainable farming for future generations. Healthy
+                    rivers support biodiversity, provide irrigation water, and maintain the ecological balance essential
+                    for agriculture.
+                  </p>
+                  <p className="text-center font-semibold text-gray-900 dark:text-white text-xl">
+                    Every drop saved today secures tomorrow's harvest.
+                  </p>
+                </div>
+              </Card>
+            </div>
+          </section>
+
+          {/* Call to Action */}
+          <section className="py-16 px-4 bg-gradient-to-br from-green-100 to-blue-100 dark:from-green-900/20 dark:to-blue-900/20">
+            <div className="container mx-auto max-w-3xl text-center">
+              <h2 className="font-oswald text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-white uppercase">
+                Start Conserving Today
+              </h2>
+              <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
+                Implement these water-saving techniques on your farm and join the movement to protect our rivers and
+                water resources for future generations.
+              </p>
+              <Link
+                href="/"
+                className="inline-block px-8 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors shadow-lg hover:shadow-xl"
+              >
+                Explore More Roles
+              </Link>
+            </div>
+          </section>
+        </>
+      )}
     </main>
   )
 }

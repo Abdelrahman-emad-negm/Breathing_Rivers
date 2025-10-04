@@ -11,10 +11,6 @@ import { Upload, CheckCircle2, XCircle, Loader2, Camera, X, Sparkles, TreeDecidu
 
 interface DetectionResult {
   treeDetected: boolean
-  accuracy: number
-  beforeCount: number
-  afterCount: number
-  difference: number
   increasePercentage: number
   beforePercentage: number
   afterPercentage: number
@@ -139,27 +135,8 @@ export default function PlantTreePage() {
       const increasePercentage = beforeGreen > 0 ? (difference / beforeGreen) * 100 : 100
       const treeDetected = difference > 1000
 
-      let accuracy = 0
-      if (treeDetected) {
-        if (difference > 5000) {
-          accuracy = Math.min(95 + difference / 10000, 99.9)
-        } else if (difference > 2000) {
-          accuracy = 85 + difference / 1000
-        } else {
-          accuracy = 70 + difference / 500
-        }
-        accuracy = Math.min(accuracy, 99.9)
-      } else {
-        accuracy = (difference / 1000) * 50
-        accuracy = Math.max(0, Math.min(accuracy, 50))
-      }
-
       setResult({
         treeDetected,
-        accuracy,
-        beforeCount: beforeGreen,
-        afterCount: afterGreen,
-        difference,
         increasePercentage,
         beforePercentage: (beforeGreen / (1920 * 1080)) * 100,
         afterPercentage: (afterGreen / (1920 * 1080)) * 100,
@@ -305,27 +282,15 @@ export default function PlantTreePage() {
                 </div>
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-2 gap-4 md:gap-6 mb-8">
-                  <div className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/50 dark:border-gray-800/50">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-3 h-3 rounded-full bg-gradient-to-r from-emerald-500 to-green-500" />
-                      <p className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">
-                        Accuracy
-                      </p>
-                    </div>
-                    <p className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-emerald-600 to-green-600 dark:from-emerald-400 dark:to-green-400 bg-clip-text text-transparent">
-                      {result.accuracy.toFixed(1)}%
-                    </p>
-                  </div>
-
-                  <div className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/50 dark:border-gray-800/50">
-                    <div className="flex items-center gap-2 mb-2">
+                <div className="flex justify-center mb-8">
+                  <div className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/50 dark:border-gray-800/50 w-full max-w-sm">
+                    <div className="flex items-center gap-2 mb-2 justify-center">
                       <div className="w-3 h-3 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500" />
                       <p className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">
                         Growth
                       </p>
                     </div>
-                    <p className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-teal-600 to-cyan-600 dark:from-teal-400 dark:to-cyan-400 bg-clip-text text-transparent">
+                    <p className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-teal-600 to-cyan-600 dark:from-teal-400 dark:to-cyan-400 bg-clip-text text-transparent text-center">
                       +{result.increasePercentage.toFixed(0)}%
                     </p>
                   </div>
@@ -372,11 +337,7 @@ export default function PlantTreePage() {
                     </div>
                     <div className="space-y-3 text-center">
                       <p className="text-lg leading-relaxed">
-                        You've added approximately{" "}
-                        <span className="font-bold text-2xl text-emerald-100">
-                          {result.difference.toLocaleString()}
-                        </span>{" "}
-                        pixels of vegetation!
+                        You've made a positive impact on the environment by planting a tree!
                       </p>
                       <div className="grid md:grid-cols-3 gap-4 mt-6">
                         <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4">
